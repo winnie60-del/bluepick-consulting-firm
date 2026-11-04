@@ -1,3 +1,4 @@
+
 const express = require("express");
 const cors = require("cors");
 const mysql = require("mysql2/promise");
@@ -5,15 +6,22 @@ const mysql = require("mysql2/promise");
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+// ==========================================
+// MIDDLEWARE
+// ==========================================
+
 app.use(cors({
-  origin: "https://bluepick-consulting-firm-oqd4-nofa9ou1o-winnie-6a02.vercel.app/",
-  methods: ["GET", "POST", "PUT", "DELETE"],
+  origin: "https://bluepick-consulting-firm-oqd4-nofa9ou1o-winnie-6a02.vercel.app",
+  methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
   credentials: true
-}));;
+}));
+
 app.use(express.json());
 
-// Database configuration
+// ==========================================
+// DATABASE CONFIGURATION
+// ==========================================
+
 const db = mysql.createPool({
   host: process.env.DB_HOST || "localhost",
   user: process.env.DB_USER || "root",
@@ -35,7 +43,9 @@ const db = mysql.createPool({
   }
 })();
 
+// ==========================================
 // BASIC ROUTES
+// ==========================================
 
 app.get("/", (req, res) => {
   res.send("Bluepick backend is running!");
@@ -59,8 +69,10 @@ app.get("/api/db-test", async (req, res) => {
       message: "MySQL connection successful!",
       database: rows[0].databaseName
     });
+
   } catch (error) {
     console.error("MySQL error:", error.message);
+
     res.status(500).json({
       success: false,
       message: error.message
@@ -178,6 +190,10 @@ app.post("/api/projects", async (req, res) => {
     });
   }
 });
+
+// ==========================================
+// PROJECT MEMBERS
+// ==========================================
 
 // Get project members
 app.get("/api/projects/:id/members", async (req, res) => {
@@ -314,7 +330,10 @@ app.put("/api/projects/:id/members", async (req, res) => {
   }
 });
 
-// Archive or restore project
+// ==========================================
+// ARCHIVE OR RESTORE PROJECT
+// ==========================================
+
 app.put("/api/projects/:id/archive", async (req, res) => {
   try {
     console.log("ARCHIVE ROUTE HIT");
