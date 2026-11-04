@@ -6,7 +6,11 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Middleware
-app.use(cors());
+app.use(cors({
+  origin: "https://bluepick-consulting-firm-oqd4-nofa9ou1o-winnie-6a02.vercel.app/",
+  methods: ["GET", "POST", "PUT", "DELETE"],
+  credentials: true
+}));;
 app.use(express.json());
 
 // Database configuration

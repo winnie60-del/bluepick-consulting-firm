@@ -7,7 +7,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(<React.StrictMode><A
 
 async function checkBackend() {
   try {
-    const response = await fetch("http://localhost:3000/api/status");
+    const response = await fetch("https://bluepick-backend.onrender.com");
     const data = await response.json();
 
     console.log(data.message);
